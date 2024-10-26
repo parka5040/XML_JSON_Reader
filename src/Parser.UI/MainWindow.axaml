@@ -1,0 +1,92 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:AvaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
+        x:Class="Parser.UI.MainWindow"
+        Title="JSON/XML Visual Parser"
+        WindowState="Normal"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid RowDefinitions="Auto,*" Margin="10">
+        <!-- Toolbar -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Margin="0,0,0,8">
+            <Button Name="OpenFileButton" Content="Open File" />
+            <Button Name="SaveFileButton" Content="Save" />
+            
+            <Button Name="EditModeButton"
+            Classes="icon-button"
+            Margin="4,0">
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <TextBlock Text="✏️"/>
+                    <TextBlock Name="EditModeText" Text="Edit Mode"/>
+                </StackPanel>
+            </Button>
+            <ComboBox Name="SyntaxModeComboBox" Width="120">
+                <ComboBoxItem>JSON</ComboBoxItem>
+                <ComboBoxItem>XML</ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+
+
+        <StackPanel DockPanel.Dock="Right" 
+                    Orientation="Horizontal" 
+                    Spacing="10" 
+                    HorizontalAlignment="Right">
+            <ToggleButton Name="MatchCaseButton" 
+                        Content="Aa" 
+                        ToolTip.Tip="Match Case"/>
+            <ToggleButton Name="RegexButton" 
+                        Content=".*" 
+                        ToolTip.Tip="Use Regex"/>
+            <ToggleButton Name="SearchValuesButton" 
+                        Content="Values" 
+                        IsChecked="True"
+                        ToolTip.Tip="Search in Values"/>
+            <ToggleButton Name="SearchNamesButton" 
+                        Content="Names" 
+                        IsChecked="True"
+                        ToolTip.Tip="Search in Names"/>
+            <ToggleButton Name="SearchAttributesButton" 
+                        Content="Attrs" 
+                        IsChecked="True"
+                        ToolTip.Tip="Search in Attributes"/>
+            <TextBox Name="SearchBox" 
+                    Width="200"
+                    Watermark="Search (quotes for phrases, * for wildcards)"/>
+        </StackPanel>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,*">
+            <!-- Text Editor -->
+            <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1">
+                <AvaloniaEdit:TextEditor 
+                    Name="Editor"
+                    FontFamily="Cascadia Code,Consolas,Menlo,Monospace"
+                    FontSize="14"
+                    ShowLineNumbers="True"
+                    WordWrap="True"
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Visible"/>
+            </Border>
+
+            <!-- Splitter -->
+            <GridSplitter Grid.Column="1" 
+                         Width="4" 
+                         Background="LightGray"
+                         ResizeDirection="Columns"/>
+
+            <!-- Tree View -->
+            <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="1">
+                <TreeView Name="DocumentTreeView">
+                    <TreeView.ItemTemplate>
+                        <TreeDataTemplate>
+                            <TextBlock Text="{Binding Header}" />
+                        </TreeDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
